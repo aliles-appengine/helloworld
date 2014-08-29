@@ -1,10 +1,10 @@
-from bottle import Bottle
+from bottle import Bottle, request
 
 app = Bottle()
 
-@app.route('/')
-def hello():
-    return "Hello World!"
+@app.route('/', method='GET')
+def echo():
+    return {key: request.headers.get(key) for key in request.headers}
 
 if __name__ == '__main__':
-    run(host='localhost', port=8080, debug=True)
+    app.run(host='localhost', port=8080, reloader=True, debug=True)
